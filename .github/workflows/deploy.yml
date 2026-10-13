@@ -18,7 +18,7 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: pytest
-      - run: docker build -t devops-app .
+      - run: docker build -t autoship .
 
   deploy:
     needs: test
@@ -31,10 +31,10 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
-            cd ~/devops-project
+            cd ~/AutoShip
             git pull origin main
-            docker build -t devops-app .
-            docker rm -f devops-app || true
-            docker run -d --name devops-app --restart unless-stopped -p 127.0.0.1:5000:5000 devops-app
+            docker build -t autoship .
+            docker rm -f autoship || true
+            docker run -d --name autoship --restart unless-stopped -p 127.0.0.1:5000:5000 autoship
             sleep 3
             curl -fsS http://127.0.0.1:5000/health
