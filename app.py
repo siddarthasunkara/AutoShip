@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     return jsonify(
-        message="Hello from my DevOps project",
+        message="Welcome to my DevOps application — built for continuous delivery!",
         host=socket.gethostname(),
         version=os.getenv("APP_VERSION", "dev"),
     )
